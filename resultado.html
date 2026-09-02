@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resultado</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f5f7fb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 36px;
+            max-width: 480px;
+            width: 100%;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+        h1 { color: #0f172a; font-size: 2rem; margin-bottom: 6px; }
+        .dados {
+            background: #f8fafc;
+            border-radius: 14px;
+            padding: 20px;
+            margin: 24px 0;
+            text-align: left;
+            line-height: 1.8;
+        }
+        .dados strong { color: #1e293b; }
+        .status-grande {
+            font-size: 2.2rem;
+            font-weight: 700;
+            padding: 12px 10px;
+            border-radius: 40px;
+            display: inline-block;
+            margin: 10px 0 6px;
+        }
+        .status-aprovado { color: #166534; background: #bbf7d0; }
+        .status-exame { color: #92400e; background: #fde68a; }
+        .status-reprovado { color: #991b1b; background: #fecaca; }
+        .btn-voltar {
+            display: inline-block;
+            margin-top: 20px;
+            background: #2563eb;
+            color: white;
+            padding: 12px 32px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+        .btn-voltar:hover { background: #1d4ed8; }
+        .subtle { color: #64748b; font-size: 0.9rem; margin-top: 16px; }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1>📋 Resultado</h1>
+
+    <div class="dados" id="dadosAluno">
+        <p><strong>Nome:</strong> <span id="nomeResultado">—</span></p>
+        <p><strong>Notas:</strong> <span id="notasResultado">—</span></p>
+        <p><strong>Média:</strong> <span id="mediaResultado">—</span></p>
+    </div>
+
+    <div>
+        <span class="status-grande" id="statusResultado">—</span>
+    </div>
+
+    <a href="index.html" class="btn-voltar">← Voltar ao formulário</a>
+    <div class="subtle">Avaliação - Programação Web Full Stack</div>
+</div>
+
+<script>
+    (function() {
+        // Lê os parâmetros da URL
+        const params = new URLSearchParams(window.location.search);
+
+        const nome = params.get('nome') || 'Não informado';
+        const n1 = params.get('nota1') || '0';
+        const n2 = params.get('nota2') || '0';
+        const n3 = params.get('nota3') || '0';
+        const n4 = params.get('nota4') || '0';
+        const media = params.get('media') || '0.00';
+        const status = params.get('status') || '—';
+
+        // Preenche os campos
+        document.getElementById('nomeResultado').textContent = nome;
+        document.getElementById('notasResultado').textContent = `${n1} | ${n2} | ${n3} | ${n4}`;
+        document.getElementById('mediaResultado').textContent = media;
+
+        const statusEl = document.getElementById('statusResultado');
+        statusEl.textContent = status;
+
+        // Aplica a classe de cor conforme o status
+        statusEl.className = 'status-grande';
+        if (status === 'APROVADO') {
+            statusEl.classList.add('status-aprovado');
+        } else if (status === 'EXAME') {
+            statusEl.classList.add('status-exame');
+        } else if (status === 'REPROVADO') {
+            statusEl.classList.add('status-reprovado');
+        } else {
+            statusEl.style.background = '#e2e8f0';
+            statusEl.style.color = '#1e293b';
+        }
+    })();
+</script>
+</body>
+</html>
